@@ -7,6 +7,8 @@ import { checkForAuthCookie } from '../../middlewares/auth.middleware'
 import {Request, Response} from "express"
 import prisma from "../../config/prisma"
 import { ApiResponse } from '../../utils/ApiResponse'
+import ApiError from '../../utils/ApiError'
+import { updateUserRole } from '../user/user.controller'
 
 
 
@@ -68,14 +70,36 @@ recordsRoute.get("/:id",async (req: Request, res: Response)=>{
 })
 
 // admin only
-recordsRoute.patch("/:id",requiredRole("ADMIN"),(req: Request, res: Response)=>{
+recordsRoute.patch("/:id",requiredRole("ADMIN"),async(req: Request, res: Response)=>{
+  
+    try{
+
+        const id = String(req.params.id)
+        const data = req.body
+        
+        const record = await prisma.financialRecord.findFirst({
+            where: { id, deletedAt: null }
+        })
+  if (!record) res.status(404).json(ApiResponse.error('Record not found'))
+    
+    const updatedRecords = await prisma.financialRecord.update({
+        where: { id },
+        data: {
+            ...data,
+            date: data.date ? new Date(data.date) : undefined
+        }
+    })
+    
+    res.status(200).json(ApiResponse.success("Record updated", updatedRecords))
+}catch{
+    res.status(500).json(ApiResponse.success("can't update due to db error"))
+}
 
 
 
 })
 
 //admin only
-
 recordsRoute.delete("/:id",requiredRole("ADMIN"),(req: Request, res: Response)=>{
 
 
