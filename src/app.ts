@@ -4,6 +4,7 @@ import "dotenv/config";
 import cookieParser from "cookie-parser";
 import authRoute from './modules/auth/auth.routes'
 import userRoute from "./modules/user/user.routes";
+import { recordsRoute } from "./modules/records/records.routes";
 
 
 
@@ -16,5 +17,7 @@ app.use(cookieParser())
 app.use("/auth",authRoute)
 
 app.use("/users",userRoute)
+
+app.use("/records",recordsRoute)
 
 export default app

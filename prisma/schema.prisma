@@ -28,5 +28,27 @@ model User {
   isActive Boolean @default(true)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+  financialRecords FinancialRecord[]
 }
 
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+
+model FinancialRecord {
+  id String @id @default(uuid())
+  amount Float
+  type TransactionType
+  category String
+  date DateTime
+  notes String?
+
+  createdBy User @relation(fields: [createdById], references: [id])
+  createdById String
+
+  updatedAt DateTime @updatedAt
+  deletedAt DateTime?
+  createdAt DateTime @default(now())
+}
