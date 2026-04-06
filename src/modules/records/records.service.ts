@@ -2,21 +2,9 @@ import { TransactionType } from '../../../generated/prisma/client'
 import prisma from '../../config/prisma'
 import { ApiError } from '../../utils/ApiError'
 
-type CreateFinancialRecordInput = {
-	amount: number
-	type: TransactionType
-	category: string
-	date: Date
-	notes?: string
-}
+import { CreateFinancialRecordInput } from '../../types/records/CreateFinancialRecordInput'
+import { UpdateFinancialRecordInput } from '../../types/records/UpdateFinancialRecordInput'
 
-type UpdateFinancialRecordInput = {
-	amount?: number
-	type?: TransactionType
-	category?: string
-	date?: Date
-	notes?: string
-}
 
 const financialRecordSelect = {
 	id: true,
