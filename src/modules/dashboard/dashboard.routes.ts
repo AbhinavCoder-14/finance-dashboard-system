@@ -1,14 +1,14 @@
 
 import express from 'express'
+
 import { requiredRole } from '../../middlewares/role.middleware'
 import { checkForAuthCookie } from '../../middlewares/auth.middleware'
 import 'dotenv/config'
 import {
-    createRecord,
-    deleteRecord,
-    getAllRecords,
-    getRecordById,
-    updateRecord,
+    getSummary,
+    getByCategory,
+    getMonthlyTrends,
+    getRecentRecords
 } from './dashboard.controller'
 
 
@@ -19,18 +19,20 @@ const dashboardRoute = express.Router()
 const cookie = process.env.COOKIE_NAME
 dashboardRoute.use(checkForAuthCookie(cookie || 'token'))
 
-dashboardRoute.post('/', requiredRole('ADMIN'), createRecord)
+dashboardRoute.get('/summary', requiredRole('ADMIN','ANALYST'), getSummary)
 
 
-dashboardRoute.get('/', getAllRecords)
-
-dashboardRoute.get('/:id', getRecordById)
+dashboardRoute.get('/by-category', requiredRole('ADMIN','ANALYST'),getByCategory)
 
 
-dashboardRoute.patch('/:id', requiredRole('ADMIN'), updateRecord)
+dashboardRoute.get('/trends',requiredRole('ADMIN','ANALYST'),getMonthlyTrends)
 
 
-dashboardRoute.delete('/:id', requiredRole('ADMIN'), deleteRecord)
+
+dashboardRoute.get('/recent',requiredRole('ADMIN','ANALYST'), getRecentRecords)
+
+
+
 
 
 

@@ -5,6 +5,7 @@ import cookieParser from "cookie-parser";
 import authRoute from './modules/auth/auth.routes'
 import userRoute from "./modules/user/user.routes";
 import  recordsRoute  from "./modules/records/records.routes";
+import dashboardRoute from "./modules/dashboard/dashboard.routes";
 
 
 
@@ -19,5 +20,7 @@ app.use("/auth",authRoute)
 app.use("/users",userRoute)
 
 app.use("/records",recordsRoute)
+
+app.use("/dashboard",dashboardRoute)
 
 export default app
