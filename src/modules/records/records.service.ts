@@ -1,4 +1,4 @@
-import { TransactionType } from '../../../generated/prisma/client'
+import { TransactionType } from '@prisma/client'
 import prisma from '../../config/prisma'
 import { ApiError } from '../../utils/ApiError'
 

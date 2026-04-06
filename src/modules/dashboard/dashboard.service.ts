@@ -37,7 +37,7 @@ export const getByCategory = async () => {
     orderBy: { _sum: { amount: 'desc' } }
   })
 
-  return result.map(item => ({
+  return result.map((item: { category: string; type: string; _sum: { amount: number | null } }) => ({
     category: item.category,
     type: item.type,
     total: item._sum.amount || 0

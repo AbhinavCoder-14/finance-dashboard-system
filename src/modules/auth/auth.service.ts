@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs"
 import prisma from "../../config/prisma"
 import { ApiError } from "../../utils/ApiError"
 import { createTokenForUsers } from "../../utils/jwt"
-import { Role } from "../../../generated/prisma/client"
+import { Role } from "@prisma/client"
 
 type RegisterInput = {
 	name: string

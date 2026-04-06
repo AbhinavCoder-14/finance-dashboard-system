@@ -1,4 +1,4 @@
-import { Role } from "../../../generated/prisma/client"
+import { Role } from "@prisma/client"
 import prisma from "../../config/prisma"
 import { ApiError } from "../../utils/ApiError"
 
