@@ -32,7 +32,9 @@ export async function login(req: Request, res: Response) {
 		}
 
 		const data = await loginUser(result.data)
+		res.cookie("token", data.token)
 		return res.status(200).json(ApiResponse.success("Login successful", data))
+
 	} catch (error) {
 		if (error instanceof ApiError) {
 			return res.status(error.statusCode).json(ApiResponse.error(error.message, error.code))
