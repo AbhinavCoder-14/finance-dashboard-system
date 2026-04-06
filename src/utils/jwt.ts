@@ -1,10 +1,13 @@
 import jwt from "jsonwebtoken"
-import { StripTypeScriptTypesOptions } from "node:module"
 import 'dotenv/config'
 
 
 const JWT_SECRET = process.env.JWT_SECRET as string
 const JWT_EXPIRES_IN = '7d'
+
+if (!JWT_SECRET) {
+    throw new Error("JWT_SECRET is not set")
+}
 
 
 export function createTokenForUsers(payload:{id:string,role:string}){
@@ -15,6 +18,6 @@ export function createTokenForUsers(payload:{id:string,role:string}){
 
 }
 
-export  function validationToken(payload:{token:string}){
-    return jwt.verify(payload.token, JWT_SECRET)
+export function validationToken(token:string){
+    return jwt.verify(token, JWT_SECRET)
 }

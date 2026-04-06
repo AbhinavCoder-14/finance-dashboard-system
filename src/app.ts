@@ -12,7 +12,7 @@ import dashboardRoute from "./modules/dashboard/dashboard.routes";
 const app = express();
 
 app.use(express.json())
-app.use(cors())
+app.use(cors({ credentials: true }))
 app.use(cookieParser())
 
 app.use("/auth",authRoute)

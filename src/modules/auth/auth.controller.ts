@@ -13,7 +13,8 @@ export async function register(req: Request, res: Response) {
 		}
 
 		const data = await registerUser(result.data)
-		return res.status(201).json(ApiResponse.success("Registered successfully", data))
+		res.cookie("token", data.token, { httpOnly: true })
+		return res.status(201).json(ApiResponse.success("Registered successfully", { user: data.user }))
 	} catch (error) {
 		if (error instanceof ApiError) {
 			return res.status(error.statusCode).json(ApiResponse.error(error.message, error.code))
@@ -32,8 +33,8 @@ export async function login(req: Request, res: Response) {
 		}
 
 		const data = await loginUser(result.data)
-		res.cookie("token", data.token)
-		return res.status(200).json(ApiResponse.success("Login successful", data))
+		res.cookie("token", data.token, { httpOnly: true })
+		return res.status(200).json(ApiResponse.success("Login successful", { user: data.user }))
 
 	} catch (error) {
 		if (error instanceof ApiError) {
